@@ -1,0 +1,2 @@
+# Sin dependencias externas previstas.
+# La interfaz utilizará tkinter, incluido en las distribuciones habituales de Python.
