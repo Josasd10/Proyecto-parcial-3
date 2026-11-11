@@ -93,3 +93,92 @@ El panel de encriptación mostrará C y L por separado. Para desencriptar se ing
 - Completar autores, instrucciones definitivas y video demostrativo.
 
 El repositorio se inicializa localmente con Git. La publicación en un servicio remoto queda pendiente.
+
+
+## Lógica RSA
+
+La lógica está implementada en Python y separada de la interfaz gráfica.
+
+### Algoritmos matemáticos
+
+En `rsa_app/logica/aritmetica_modular.py` se encuentran:
+
+- `es_primo`: comprueba divisibilidad hasta la raíz cuadrada del número,
+  utilizando la condición `divisor * divisor <= numero`.
+- `mcd_euclides`: calcula el máximo común divisor mediante residuos sucesivos.
+- `bezout_matricial`: obtiene los coeficientes de Bézout mediante
+  actualizaciones de una matriz.
+- `inverso_modular`: comprueba que los números sean coprimos y utiliza
+  el coeficiente de Bézout para obtener el inverso.
+- `exponenciacion_modular`: utiliza cuadrados sucesivos y reduce módulo n
+  durante el cálculo, sin construir primero la potencia completa.
+
+Estos algoritmos no utilizan `math.gcd`, `pow` ni bibliotecas criptográficas.
+
+### Validación y representación del texto
+
+`ValidadorRSA` comprueba las entradas numéricas, la primalidad de p y q,
+el rango de n y que e sea mayor que 1 y coprimo con phi.
+
+También comprueba los caracteres ASCII permitidos, el formato y rango
+de los bloques cifrados y la coherencia entre L y la cantidad de bloques.
+
+`CodificadorASCII` representa cada carácter mediante tres dígitos
+y agrupa dos caracteres por bloque. Si la longitud original es impar,
+agrega exactamente un espacio de relleno.
+
+Al desencriptar se verifica ese espacio y se retira únicamente el último
+carácter. Los espacios originales se conservan.
+
+Como convención del programa, el mensaje vacío se representa con cifrado
+vacío y longitud cero.
+
+### Operaciones completas
+
+`ServicioRSA.encriptar` devuelve un `ResultadoEncriptacion` con el cifrado,
+la longitud original, los parámetros y el detalle de los bloques.
+
+`ServicioRSA.desencriptar` calcula el exponente privado y devuelve un
+`ResultadoDesencriptacion` con el mensaje recuperado y el detalle del proceso.
+
+`ControladorRSA` recibe las entradas de la interfaz, llama al servicio
+y comunica resultados o mensajes de validación mediante funciones
+proporcionadas por la ventana.
+
+### Ejemplo de referencia
+
+- Mensaje: `"RSA"`
+- p: 367
+- q: 373
+- e: 17
+- n: 136891
+- phi: 136152
+- Longitud original L: 3
+- Mensaje con relleno: `"RSA "`
+- Bloques originales: `082083 065032`
+- Cifrado C: `026054 123875`
+- Exponente privado d: 8009
+- Mensaje recuperado: `"RSA"`
+
+Para desencriptar deben conservarse C y L e ingresarse junto con p, q y e.
+
+### Comprobaciones de la lógica
+
+Desde la carpeta `rsa-mm2015`, ejecutar:
+
+    python verificar_rsa.py
+
+Se comprueban la recuperación exacta de mensajes pares e impares,
+mayúsculas y minúsculas, números, signos, espacios consecutivos,
+espacios al inicio y al final y el mensaje vacío.
+
+También se comprueba el ejemplo del enunciado, incluyendo los ceros
+iniciales del cifrado, y el rechazo de primos iguales, exponentes
+no coprimos, caracteres no admitidos, bloques mal formados,
+bloques fuera de rango y longitudes inconsistentes.
+
+La comprobación del controlador verifica que las operaciones válidas
+comuniquen resultados y que las inválidas comuniquen errores.
+
+La interfaz gráfica requiere una comprobación adicional después
+de su integración.

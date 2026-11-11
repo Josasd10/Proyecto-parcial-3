@@ -1,7 +1,15 @@
-"""Modelo de parámetros y claves RSA."""
+"""Datos utilizados por las operaciones RSA."""
+
+from dataclasses import dataclass
 
 
+@dataclass
 class ParametrosRSA:
-    """Pendiente: representar p, q, e, n, phi y d cuando corresponda."""
+    """Conserva las entradas RSA y sus valores calculados."""
 
-    pass
+    p: int
+    q: int
+    e: int
+    n: int
+    phi: int
+    d: int | None = None

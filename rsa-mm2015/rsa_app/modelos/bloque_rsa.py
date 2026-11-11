@@ -1,7 +1,14 @@
-"""Modelo de un bloque durante el proceso RSA."""
+"""Información de un bloque durante el proceso RSA."""
+
+from dataclasses import dataclass
 
 
+@dataclass
 class BloqueRSA:
-    """Pendiente: conservar pareja, códigos ASCII y valores original y cifrado."""
+    """Conserva la representación de una pareja de caracteres."""
 
-    pass
+    posicion: int
+    caracteres: str
+    codigos_ascii: tuple[int, int]
+    valor_original: int
+    valor_cifrado: int

@@ -1,7 +1,7 @@
-"""Errores que la interfaz presentará al usuario."""
+"""Errores de validación del programa RSA."""
 
 
 class ErrorValidacion(ValueError):
-    """Pendiente: representar una entrada inválida con un mensaje comprensible."""
+    """Indica que los datos ingresados no cumplen los requisitos."""
 
     pass
