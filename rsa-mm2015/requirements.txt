@@ -1,2 +1,4 @@
-# Sin dependencias externas previstas.
-# La interfaz utilizará tkinter, incluido en las distribuciones habituales de Python.
+# Este proyecto utiliza únicamente la biblioteca estándar de Python 3.10+.
+# La interfaz usa tkinter y tkinter.ttk. No se necesitan paquetes de pip.
+# Tkinter requiere una instalación de Python con soporte Tcl/Tk.
+

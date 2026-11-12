@@ -1,9 +1,19 @@
-"""Punto de entrada provisional del proyecto."""
+"""Punto de entrada de la aplicación gráfica RSA."""
+
+from rsa_app.controladores.controlador_rsa import ControladorRSA
+from rsa_app.interfaz.aplicacion_rsa import AplicacionRSA
 
 
 def main() -> None:
-    """Confirmar que la estructura está disponible mientras se implementa la GUI."""
-    print("Estructura RSA creada. La aplicación todavía no está implementada.")
+    """Crea la ventana, conecta el controlador e inicia el bucle de eventos."""
+    aplicacion = AplicacionRSA()
+    controlador = ControladorRSA(
+        mostrar_encriptacion=aplicacion.mostrar_encriptacion,
+        mostrar_desencriptacion=aplicacion.mostrar_desencriptacion,
+        mostrar_error=aplicacion.mostrar_error,
+    )
+    aplicacion.conectar_controlador(controlador)
+    aplicacion.mainloop()
 
 
 if __name__ == "__main__":
